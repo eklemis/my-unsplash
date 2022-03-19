@@ -9,12 +9,10 @@ export default function Home(props) {
 	const [addingPhoto, setAddingPhoto] = useState(false);
 	const [deletingPhoto, setDeletingPhoto] = useState(false);
 	const [allPhoto, setAllPhoto] = useState(props.allPhotos);
-	const [newRow, setNewRow] = useState({});
 	function addRow(newRow_) {
 		var img = new Image();
 		let row;
 		img.onload = function () {
-			//setNewRow({ ...newRow_, width: this.width, height: this.height });
 			row = { ...newRow_, width: this.width, height: this.height };
 			console.log(row);
 			const temp_all_photos = [row, ...allPhoto];
@@ -37,14 +35,6 @@ export default function Home(props) {
 			postPhoto();
 		};
 		img.src = newRow_.url;
-		//row = { ...newRow };
-	}
-	useEffect(() => {
-		console.log(allPhoto);
-	}, [allPhoto]);
-	function imageLoadHandler({ target: img }) {
-		const { width, height } = img;
-		console.log(height, width);
 	}
 	function showAddPhoto() {
 		setAddingPhoto(true);
