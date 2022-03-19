@@ -41,21 +41,6 @@ export default function Addphoto(props) {
 					id: nanoid(),
 				};
 				props.addRow(newRecord);
-				const postPhoto = async () => {
-					const res = await fetch("/api/newphoto", {
-						body: JSON.stringify({
-							...inputData,
-						}),
-						headers: {
-							"Content-Type": "application/json",
-						},
-						method: "POST",
-					});
-
-					const result = await res.json();
-					return result;
-				};
-				props.setAllPhoto(await postPhoto());
 				props.cancelAddPhoto();
 			} else {
 				setUrlNoImage(true);

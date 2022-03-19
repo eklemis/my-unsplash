@@ -22,7 +22,7 @@ export default function Home(props) {
 			const postPhoto = async () => {
 				const res = await fetch("/api/newphoto", {
 					body: JSON.stringify({
-						...inputData,
+						...row,
 					}),
 					headers: {
 						"Content-Type": "application/json",
@@ -32,6 +32,7 @@ export default function Home(props) {
 
 				const result = await res.json();
 				setAllPhoto(result);
+				console.log(allPhoto);
 			};
 			postPhoto();
 		};
