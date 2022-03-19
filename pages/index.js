@@ -4,11 +4,30 @@ import Header from "../components/header";
 import Addphoto from "../components/addphoto";
 import { getAllPhoto } from "../helpers/photo";
 import { useState, useEffect } from "react";
+import Img from "next/image";
 
 export default function Home(props) {
 	const [addingPhoto, setAddingPhoto] = useState(false);
 	const [deletingPhoto, setDeletingPhoto] = useState(false);
 	const [allPhoto, setAllPhoto] = useState(props.allPhotos);
+	const [fKeyword, setFKeyword] = useState("");
+	const [fRecords, setFRecords] = useState(props.allPhotos);
+	useEffect(() => {
+		if (fKeyword.trim() === "") {
+			setFRecords(allPhoto);
+		} else {
+			setFRecords(allPhoto.filter((row) => row.label.include(fKeyword.trim())));
+		}
+	}, [allPhoto, fKeyword]);
+	const images = fRecords.map((row, index) => {
+		const width = 388;
+		const height = parseInt((row.height / row.width) * width);
+		return (
+			<div className={styles.box} key={row.id + "-box"}>
+				<Img src={row.url} width={width} height={height} key={row.id} />
+			</div>
+		);
+	});
 	function addRow(newRow_) {
 		var img = new Image();
 		let row;
@@ -64,7 +83,7 @@ export default function Home(props) {
 					<link rel="icon" href="/favicon.ico" />
 				</Head>
 				<Header showAddPhoto={showAddPhoto} />
-				<div className={styles.main}></div>
+				<div className={styles.main}>{images}</div>
 				<footer className={styles.footer}>
 					<a
 						href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"

@@ -1,18 +1,33 @@
 .container {
 	padding: 0 2rem;
-	margin: 32px auto;
-}
-
-.main {
-	min-height: 100vh;
-	padding: 4rem 0;
-	flex: 1;
+	margin: 32px 100px;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
-	align-items: center;
 }
 
+.main {
+	margin: 0px auto;
+	margin-top: 75px;
+	width: 100%;
+	columns: 3;
+	column-gap: 0px;
+	border: red dashed 1px;
+	padding: 0px auto;
+}
+.box {
+	width: 385px;
+	padding: 0;
+	margin-bottom: 10px;
+	break-inside: avoid;
+	border-radius: 16px;
+	border: green dashed 1px;
+	object-fit: cover;
+	margin-right: 0px;
+}
+.box img {
+	border-radius: 16px;
+}
 .footer {
 	display: flex;
 	flex: 1;
