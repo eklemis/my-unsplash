@@ -8,6 +8,7 @@ export default async function handler(req, res) {
 		const jimage = await Jimp.read(req.body.url);
 		const postingData = {
 			url: req.body.url,
+			label: req.body.label,
 			width: jimage.bitmap.width,
 			height: jimage.bitmap.height,
 			userId: req.body.userId,

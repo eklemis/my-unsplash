@@ -1,5 +1,4 @@
 import Head from "next/head";
-import Image from "next/image";
 import styles from "../styles/Home.module.css";
 import Header from "../components/header";
 import Addphoto from "../components/addphoto";
@@ -10,9 +9,42 @@ export default function Home(props) {
 	const [addingPhoto, setAddingPhoto] = useState(false);
 	const [deletingPhoto, setDeletingPhoto] = useState(false);
 	const [allPhoto, setAllPhoto] = useState(props.allPhotos);
+	const [newRow, setNewRow] = useState({});
+	function addRow(newRow_) {
+		var img = new Image();
+		let row;
+		img.onload = function () {
+			//setNewRow({ ...newRow_, width: this.width, height: this.height });
+			row = { ...newRow_, width: this.width, height: this.height };
+			console.log(row);
+			const temp_all_photos = [row, ...allPhoto];
+			setAllPhoto(temp_all_photos);
+			const postPhoto = async () => {
+				const res = await fetch("/api/newphoto", {
+					body: JSON.stringify({
+						...inputData,
+					}),
+					headers: {
+						"Content-Type": "application/json",
+					},
+					method: "POST",
+				});
+
+				const result = await res.json();
+				setAllPhoto(result);
+			};
+			postPhoto();
+		};
+		img.src = newRow_.url;
+		//row = { ...newRow };
+	}
 	useEffect(() => {
 		console.log(allPhoto);
 	}, [allPhoto]);
+	function imageLoadHandler({ target: img }) {
+		const { width, height } = img;
+		console.log(height, width);
+	}
 	function showAddPhoto() {
 		setAddingPhoto(true);
 	}
@@ -28,7 +60,11 @@ export default function Home(props) {
 	return (
 		<>
 			{addingPhoto && (
-				<Addphoto cancelAddPhoto={cancelAddPhoto} setAllPhoto={setAllPhoto} />
+				<Addphoto
+					cancelAddPhoto={cancelAddPhoto}
+					setAllPhoto={setAllPhoto}
+					addRow={addRow}
+				/>
 			)}
 			<div className={styles.container}>
 				<Head>
@@ -44,15 +80,7 @@ export default function Home(props) {
 						target="_blank"
 						rel="noopener noreferrer"
 					>
-						Powered by{" "}
-						<span className={styles.logo}>
-							<Image
-								src="/vercel.svg"
-								alt="Vercel Logo"
-								width={72}
-								height={16}
-							/>
-						</span>
+						Powered by <span className={styles.logo}></span>
 					</a>
 				</footer>
 			</div>

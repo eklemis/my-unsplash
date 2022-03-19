@@ -2,6 +2,7 @@ import styles from "./addphoto.module.css";
 import validator from "validator";
 import { useState } from "react";
 import { useEffect } from "react";
+import { nanoid } from "nanoid";
 
 export default function Addphoto(props) {
 	const [inputData, setInputData] = useState({
@@ -33,7 +34,13 @@ export default function Addphoto(props) {
 			setUrlInvalid(false);
 			if (inputData.url.match(/\.(jpeg|jpg|gif|png)$/) != null) {
 				setUrlInvalid(false);
-				console.log(inputData);
+
+				const newRecord = {
+					...inputData,
+					createdAt: Date().toString(),
+					id: nanoid(),
+				};
+				props.addRow(newRecord);
 				const postPhoto = async () => {
 					const res = await fetch("/api/newphoto", {
 						body: JSON.stringify({

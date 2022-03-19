@@ -11,9 +11,14 @@
   "dependencies": {
     "@prisma/client": "^3.11.0",
     "jimp": "^0.16.1",
+    "nanoid": "^3.3.1",
+    "net": "^1.0.2",
     "next": "12.1.0",
     "react": "17.0.2",
     "react-dom": "17.0.2",
+    "request-image-size": "^2.2.0",
+    "safe-json-stringify": "^1.2.0",
+    "tls": "^0.0.1",
     "validator": "^13.7.0"
   },
   "devDependencies": {
