@@ -1,6 +1,6 @@
 import styles from "./header.module.css";
 
-export default function Header() {
+export default function Header(props) {
 	return (
 		<header className={styles.header}>
 			<div className={styles["left-wrapper"]}>
@@ -11,7 +11,9 @@ export default function Header() {
 					className={styles["search-text"]}
 				/>
 			</div>
-			<button className={styles.btn}>Add a photo</button>
+			<button className={styles.btn} onClick={props.showAddPhoto}>
+				Add a photo
+			</button>
 		</header>
 	);
 }
