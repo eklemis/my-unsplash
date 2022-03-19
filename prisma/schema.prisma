@@ -21,8 +21,10 @@ model User{
 model Images {
   id      String @id @default(cuid())
   url     String
+  label   String @default("")
   width   Int
   height  Int
   user    User    @relation("posts", fields: [userId], references: [id])
   userId  Int 
+  createdAt DateTime @default(now())
 }

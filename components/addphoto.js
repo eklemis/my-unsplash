@@ -14,17 +14,7 @@ export default function Addphoto(props) {
 
 	const [urlInvalid, setUrlInvalid] = useState();
 	const [urlNoImage, setUrlNoImage] = useState();
-	useEffect(() => {
-		const img = new Image();
-		img.src = inputData.url;
-		const loadImage = (event) => {
-			setInputData({ ...inputData, width: img.width, height: img.height });
-		};
-		img.addEventListener("load", loadImage, true);
-		return () => {
-			img.removeEventListener("load", loadImage, true);
-		};
-	}, [inputData, urlNoImage]);
+	useEffect(() => {});
 	function labelChange(event) {
 		setInputData({
 			...inputData,
@@ -37,13 +27,28 @@ export default function Addphoto(props) {
 			url: event.target.value,
 		});
 	}
-	function submitHandler(event) {
+	async function submitHandler(event) {
 		event.preventDefault();
 		if (validator.isURL(inputData.url)) {
 			setUrlInvalid(false);
 			if (inputData.url.match(/\.(jpeg|jpg|gif|png)$/) != null) {
 				setUrlInvalid(false);
 				console.log(inputData);
+				const postPhoto = async () => {
+					const res = await fetch("/api/newphoto", {
+						body: JSON.stringify({
+							...inputData,
+						}),
+						headers: {
+							"Content-Type": "application/json",
+						},
+						method: "POST",
+					});
+
+					const result = await res.json();
+					return result;
+				};
+				props.setAllPhoto(await postPhoto());
 				props.cancelAddPhoto();
 			} else {
 				setUrlNoImage(true);

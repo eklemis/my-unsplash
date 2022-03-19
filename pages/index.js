@@ -3,11 +3,16 @@ import Image from "next/image";
 import styles from "../styles/Home.module.css";
 import Header from "../components/header";
 import Addphoto from "../components/addphoto";
-import { useState } from "react";
+import { getAllPhoto } from "../helpers/photo";
+import { useState, useEffect } from "react";
 
-export default function Home() {
+export default function Home(props) {
 	const [addingPhoto, setAddingPhoto] = useState(false);
 	const [deletingPhoto, setDeletingPhoto] = useState(false);
+	const [allPhoto, setAllPhoto] = useState(props.allPhotos);
+	useEffect(() => {
+		console.log(allPhoto);
+	}, [allPhoto]);
 	function showAddPhoto() {
 		setAddingPhoto(true);
 	}
@@ -22,7 +27,9 @@ export default function Home() {
 	}
 	return (
 		<>
-			{addingPhoto && <Addphoto cancelAddPhoto={cancelAddPhoto} />}
+			{addingPhoto && (
+				<Addphoto cancelAddPhoto={cancelAddPhoto} setAllPhoto={setAllPhoto} />
+			)}
 			<div className={styles.container}>
 				<Head>
 					<title>My Unsplash</title>
@@ -51,4 +58,18 @@ export default function Home() {
 			</div>
 		</>
 	);
+}
+export async function getStaticProps() {
+	const data = await getAllPhoto();
+	if (!data) {
+		return {
+			notFound: true,
+		};
+	}
+	return {
+		props: {
+			allPhotos: data,
+		},
+		revalidate: 10,
+	};
 }
