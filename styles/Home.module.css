@@ -11,22 +11,9 @@
 	margin-top: 75px;
 	width: 100%;
 	columns: 3;
-	column-gap: 0px;
-	border: red dashed 1px;
+	column-gap: 10px;
+	row-gap: 0px;
 	padding: 0px auto;
-}
-.box {
-	width: 385px;
-	padding: 0;
-	margin-bottom: 10px;
-	break-inside: avoid;
-	border-radius: 16px;
-	border: green dashed 1px;
-	object-fit: cover;
-	margin-right: 0px;
-}
-.box img {
-	border-radius: 16px;
 }
 .footer {
 	display: flex;

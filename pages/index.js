@@ -4,7 +4,7 @@ import Header from "../components/header";
 import Addphoto from "../components/addphoto";
 import { getAllPhoto } from "../helpers/photo";
 import { useState, useEffect } from "react";
-import Img from "next/image";
+import ImageBox from "../components/imagebox";
 
 export default function Home(props) {
 	const [addingPhoto, setAddingPhoto] = useState(false);
@@ -16,16 +16,22 @@ export default function Home(props) {
 		if (fKeyword.trim() === "") {
 			setFRecords(allPhoto);
 		} else {
-			setFRecords(allPhoto.filter((row) => row.label.include(fKeyword.trim())));
+			setFRecords(
+				allPhoto.filter((row) => row.label.includes(fKeyword.trim()))
+			);
 		}
 	}, [allPhoto, fKeyword]);
 	const images = fRecords.map((row, index) => {
-		const width = 388;
+		const width = 385;
 		const height = parseInt((row.height / row.width) * width);
 		return (
-			<div className={styles.box} key={row.id + "-box"}>
-				<Img src={row.url} width={width} height={height} key={row.id} />
-			</div>
+			<ImageBox
+				width={width}
+				height={height}
+				url={row.url}
+				label={row.label}
+				key={row.id}
+			/>
 		);
 	});
 	function addRow(newRow_) {
@@ -82,7 +88,7 @@ export default function Home(props) {
 					<meta name="description" content="Mini version unsplash" />
 					<link rel="icon" href="/favicon.ico" />
 				</Head>
-				<Header showAddPhoto={showAddPhoto} />
+				<Header showAddPhoto={showAddPhoto} setFKeyword={setFKeyword} />
 				<div className={styles.main}>{images}</div>
 				<footer className={styles.footer}>
 					<a
