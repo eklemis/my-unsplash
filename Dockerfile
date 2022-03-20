@@ -1,3 +1,3 @@
-FROM node:16-slim
+FROM node:lts
 RUN apt-get update
-RUN apt-get install -y openssl
+RUN apt-get -qy update && apt-get -qy install openssl
