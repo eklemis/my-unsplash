@@ -13,11 +13,18 @@ export default function Home(props) {
 	const [fKeyword, setFKeyword] = useState("");
 	const [fRecords, setFRecords] = useState(props.allPhotos);
 	useEffect(() => {
+		const temp_all_photos = allPhoto.map((row) => {
+			const formatedDate = new Date(row.createdAt);
+			const newRow = { ...row, createdAt: formatedDate };
+			return newRow;
+		});
+		temp_all_photos.sort((a, b) => b.createdAt - a.createdAt);
+		//console.log(temp_all_photos);
 		if (fKeyword.trim() === "") {
-			setFRecords(allPhoto);
+			setFRecords(temp_all_photos);
 		} else {
 			setFRecords(
-				allPhoto.filter((row) => row.label.includes(fKeyword.trim()))
+				temp_all_photos.filter((row) => row.label.includes(fKeyword.trim()))
 			);
 		}
 	}, [allPhoto, fKeyword]);
@@ -31,6 +38,7 @@ export default function Home(props) {
 				url={row.url}
 				label={row.label}
 				key={row.id}
+				setDeletingPhoto={setDeletingPhoto}
 			/>
 		);
 	});
