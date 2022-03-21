@@ -8,13 +8,15 @@ export default function Header(props) {
 	return (
 		<header className={styles.header}>
 			<div className={styles["left-wrapper"]}>
-				<Image
-					src="/my_unsplash_logo.svg"
-					className={styles.logo}
-					alt="logo"
-					width={138}
-					height={26}
-				/>
+				<a href="">
+					<Image
+						src="/my_unsplash_logo.svg"
+						className={styles.logo}
+						alt="logo"
+						width={138}
+						height={26}
+					/>
+				</a>
 				<input
 					type="text"
 					placeholder="Search by name"
