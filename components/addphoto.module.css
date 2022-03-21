@@ -18,7 +18,7 @@
 	z-index: 1001;
 }
 .form {
-	width: 620px;
+	width: 98vw;
 	background: #ffffff;
 	border-radius: 12px;
 	padding: 24px 32px;
@@ -100,4 +100,10 @@
 	border: none;
 	background-color: transparent;
 	cursor: pointer;
+}
+/* talets: */
+@media only screen and (min-width: 768px) {
+	.form {
+		width: 620px;
+	}
 }
